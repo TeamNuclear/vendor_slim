@@ -70,8 +70,6 @@ PRODUCT_PACKAGES += \
     CellBroadcastReceiver \
     Development \
     SpareParts \
-    Superuser \
-    su
 
 # Optional packages
 PRODUCT_PACKAGES += \
