@@ -169,45 +169,27 @@ PRODUCT_COPY_FILES += \
 endif
 endif
 
-# Versioning System
-# SlimLP first version.
-PRODUCT_VERSION_MAJOR = 6.0
-PRODUCT_VERSION_MINOR = alpha
-PRODUCT_VERSION_MAINTENANCE = 0.1
-ifdef SLIM_BUILD_EXTRA
-    SLIM_POSTFIX := -$(SLIM_BUILD_EXTRA)
-endif
-ifndef SLIM_BUILD_TYPE
-    SLIM_BUILD_TYPE := UNOFFICIAL
-    PLATFORM_VERSION_CODENAME := UNOFFICIAL
-    SLIM_POSTFIX := -$(shell date +"%Y%m%d-%H%M")
-endif
-
-# SlimIRC
-# export INCLUDE_SLIMIRC=1 for unofficial builds
-ifneq ($(filter WEEKLY OFFICIAL,$(SLIM_BUILD_TYPE)),)
-    INCLUDE_SLIMIRC = 1
-endif
-
-ifneq ($(INCLUDE_SLIMIRC),)
-    PRODUCT_PACKAGES += SlimIRC
-endif
-
 # Chromium Prebuilt
 ifeq ($(PRODUCT_PREBUILT_WEBVIEWCHROMIUM),yes)
 -include prebuilts/chromium/$(TARGET_DEVICE)/chromium_prebuilt.mk
 endif
 
-# Set all versions
-SLIM_VERSION := Slim-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(PRODUCT_VERSION_MAINTENANCE)-$(SLIM_BUILD_TYPE)$(SLIM_POSTFIX)
-SLIM_MOD_VERSION := Slim-$(SLIM_BUILD)-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(PRODUCT_VERSION_MAINTENANCE)-$(SLIM_BUILD_TYPE)$(SLIM_POSTFIX)
+# Versioning System
+# NuclearVersion
+ROM_VERSION = 6.0
+ROM_VERSION_STATUS = alpha
+ROM_VERSION_MAINTENANCE = 1.0
+ROM_POSTFIX := $(shell date +"%Y%m%d-%H%M")
+
+NUCLEAR_VERSION := NuclearSlim-V$(ROM_VERSION_MAINTENANCE)-$(ROM_VERSION_STATUS)[$(ROM_VERSION)]-$(ROM_POSTFIX)
+NUCLEAR_MOD_VERSION := NuclearSlim-V$(ROM_VERSION_MAINTENANCE)-$(ROM_VERSION_STATUS)[$(ROM_VERSION)]-$(ROM_POSTFIX)
 
 PRODUCT_PROPERTY_OVERRIDES += \
     BUILD_DISPLAY_ID=$(BUILD_ID) \
-    slim.ota.version=$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(PRODUCT_VERSION_MAINTENANCE) \
-    ro.slim.version=$(SLIM_VERSION) \
-    ro.modversion=$(SLIM_MOD_VERSION) \
-    ro.slim.buildtype=$(SLIM_BUILD_TYPE)
+    slim.ota.version=$(ROM_VERSION).$(ROM_VERSION_STATUS).$(ROM_VERSION_MAINTENANCE) \
+    ro.slim.version=$(NUCLEAR_VERSION) \
+    ro.modversion=$(NUCLEAR_MOD_VERSION) \
+    ro.slim.buildtype=$(ROM_VERSION_STATUS)
 
 EXTENDED_POST_PROCESS_PROPS := vendor/slim/tools/slim_process_props.py
 
